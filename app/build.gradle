@@ -1,0 +1,70 @@
+import com.viper.vvvvv.Deps
+import com.viper.vvvvv.Versions
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+}
+
+android {
+    compileSdkVersion Versions.compileSdkVersion
+    buildToolsVersion Versions.buildToolsVersion
+
+    defaultConfig {
+        applicationId Versions.applicationId
+        minSdkVersion Versions.minSdkVersion
+        targetSdkVersion Versions.targetSdkVersion
+        versionCode Versions.versionCode
+        versionName Versions.versionName
+
+        testInstrumentationRunner Deps.Test.androidJUnitRunner
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    dataBinding {
+        //noinspection DataBindingWithoutKapt
+        enabled = true
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    /**
+     * androidx
+     */
+    implementation(Deps.Androidx.coreKtx)
+    implementation(Deps.Androidx.appcompat)
+    implementation(Deps.Androidx.material)
+    implementation(Deps.Androidx.constraintlayout)
+    implementation(Deps.Androidx.preferenceKtx)
+
+    /**
+     * network
+     */
+    implementation(Deps.Network.retrofit)
+    implementation(Deps.Network.retrofitConverterGson)
+    debugImplementation(Deps.Network.chuckerDebug)
+    releaseImplementation(Deps.Network.chuckerRelease)
+
+    /**
+     * tools
+     */
+    implementation(Deps.Tools.mmkv)
+
+}
