@@ -1,4 +1,4 @@
-package com.viper.vvvvv
+package com.viper.vvvvv.utils
 
 import android.app.Application
 import android.os.Parcelable

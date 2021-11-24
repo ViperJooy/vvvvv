@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/live_fragment">
+
+    <fragment
+        android:id="@+id/live_fragment"
+        android:name="com.viper.vvvvv.ui.LiveFragment"
+        android:label="Live"
+        tools:layout="@layout/fragment_live">
+        <action
+            android:id="@+id/action_liveFragment_to_videoFragment"
+            app:destination="@id/video_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/video_fragment"
+        android:name="com.viper.vvvvv.ui.VideoFragment"
+        android:label="Video"
+        tools:layout="@layout/fragment_video">
+        <action
+            android:id="@+id/action_videoFragment_to_otherFragment"
+            app:destination="@id/other_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/other_fragment"
+        android:name="com.viper.vvvvv.ui.OtherFragment"
+        android:label="Other"
+        tools:layout="@layout/fragment_other" />
+
+</navigation>

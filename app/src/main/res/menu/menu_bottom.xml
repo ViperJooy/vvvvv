@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/live_fragment"
+        android:contentDescription="@string/menu_live"
+        android:icon="@drawable/baseline_live_tv_white_24dp"
+        android:title="@string/menu_live" />
+
+    <item
+        android:id="@+id/video_fragment"
+        android:contentDescription="@string/menu_video"
+        android:icon="@drawable/baseline_video_library_white_24dp"
+        android:title="@string/menu_video" />
+
+    <item
+        android:id="@+id/other_fragment"
+        android:contentDescription="@string/menu_other"
+        android:icon="@drawable/baseline_settings_white_24dp"
+        android:title="@string/menu_other" />
+
+</menu>

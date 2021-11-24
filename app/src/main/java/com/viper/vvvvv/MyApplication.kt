@@ -1,6 +1,7 @@
 package com.viper.vvvvv
 
 import android.app.Application
+import com.viper.vvvvv.utils.MMKVUtil
 
 /**
  * author: viper

@@ -1,9 +1,11 @@
-package com.viper.vvvvv
+package com.viper.vvvvv.utils
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import android.webkit.CookieManager
+import com.viper.vvvvv.ApiService
+import com.viper.vvvvv.MyApplication
 import okhttp3.Cookie
 import java.lang.StringBuilder
 
@@ -54,9 +56,9 @@ object SharedPrefObject {
         val cookieManager = CookieManager.getInstance()
         cookieManager.setAcceptCookie(true)
         cookies.forEach {
-            editor.putString(it.name(), it.value())
-            cookie.append(it.name()).append("=").append(it.value()).append(";")
-            cookieManager.setCookie(it.domain(), "${it.name()}=${it.value()}")
+            editor.putString(it.name, it.value)
+            cookie.append(it.name).append("=").append(it.value).append(";")
+            cookieManager.setCookie(it.domain, "${it.name}=${it.value}")
         }
         editor.apply()
         cookieManager.flush()
