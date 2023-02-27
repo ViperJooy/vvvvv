@@ -1,7 +1,8 @@
 pipeline{
     agent {
         docker {
-            image 'allbears/jenkins-android:1.0.3' //①
+//             image 'allbears/jenkins-android:1.0.3' //①
+            image 'terasology/jenkins-android-agent:latest' //①
         }
     }
     stages {
