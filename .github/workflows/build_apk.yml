@@ -36,7 +36,7 @@ jobs:
 #          name: app
 #          path: app/build/outputs/apk/release/app-release.apk
 
-      - name: Build & Publish Release APK
+      - name: Build & Publish Release APK by viper
         # You may pin to the exact commit or the version.
         # uses: evonicgu/action-release-releaseapk@ba7b20aa82dc51a555e6cee0b2f64a0c1fa8e228
         uses: evonicgu/action-release-releaseapk@0.0.8
