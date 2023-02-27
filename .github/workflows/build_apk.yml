@@ -25,8 +25,8 @@ jobs:
       # 打包release
       - name: Build with Gradle
         env:
-          PASSWORD: ${{ secret.PASSWORD }}
-          ALIAS: ${{ secret.ALIAS }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          ALIAS: ${{ secrets.ALIAS }}
         run: |
           echo $PASSWORD
           echo $ALIAS
