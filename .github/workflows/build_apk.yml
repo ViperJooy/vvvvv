@@ -24,7 +24,15 @@ jobs:
 
       # 打包release
       - name: Build with Gradle
+        env:
+          PASSWORD: ${{ secret.PASSWORD }}
+          ALIAS: ${{ secret.ALIAS }}
         run: |
+          echo $PASSWORD
+          echo $ALIAS
+          sed -i "1s/123/$PASSWORD/" keystore.properties
+          sed -i "2s/123/$PASSWORD/" keystore.properties
+          sed -i "3s/123/$ALIAS/" keystore.properties
           ./gradlew clean
           ./gradlew assembleRelease
 
@@ -50,7 +58,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.apk-info.outputs.version-name }}
+          tag_name: v${{ steps.apk-info.outputs.version-name }}
           release_name: Release ${{ steps.apk-info.outputs.version-name }}
           draft: false
           prerelease: false
@@ -66,5 +74,5 @@ jobs:
           # See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: app/build/outputs/apk/release/app-release.apk
-          asset_name: App.apk
+          asset_name: app-release.apk
           asset_content_type: application/vnd.android.package-archiv
