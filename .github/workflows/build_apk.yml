@@ -29,8 +29,8 @@ jobs:
 
       #step：上传apk 到action，在右上角查看
       # 官方文档 https://help.github.com/cn/actions/automating-your-workflow-with-github-actions/persisting-workflow-data-using-artifacts#uploading-build-and-test-artifacts
-      - name: Upload APK
-        uses: actions/upload-artifact@v2
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: app
           path: app/build/outputs/apk/release/app-release.apk
@@ -58,37 +58,12 @@ jobs:
       - name: Send mail
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: smtp.qq.com
+          server_address: smtp.gmail.com
           server_port: 465
-          username: ${{ secrets.MAILUSERNAME }}
-          password: ${{ secrets.MAILPASSWORD }}
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
           subject: Github Actions job result
-          to: 1479975247@qq.com
-          from: viper
+          to: viperjooy@gmail.com
+          from: viper github action
           secure: true
           body: "吃饭! \n触发人：${{ env.sender }} \n版本：${{ env.versionResult }} \n提交内容：${{ env.updateLog }}"
-
-#      # 创建realease
-#      - name: Create Release
-#        id: create_release
-#        uses: actions/create-release@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          tag_name: ${{ github.ref }}
-#          release_name: Release ${{ github.ref }}
-#          draft: false
-#          prerelease: false
-#      # 上传apk到release
-#      - name: Upload Release Asset
-#        id: upload-release-asset
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`.
-#          # See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-#          upload_url: ${{ steps.create_release.outputs.upload_url }}
-#          asset_path: app/build/outputs/apk/release/app-release.apk
-#          asset_name: App.apk
-#          asset_content_type: application/vnd.android.package-archiv
