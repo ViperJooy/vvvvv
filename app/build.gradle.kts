@@ -47,12 +47,12 @@ android {
             abiFilters.addAll(arrayListOf("x86_64", "armeabi-v7a", "arm64-v8a"))
         }
 
-        base {
-            //打包名称示例：BuildSrc(1.2)-release.apk
-            archivesName.set("vvvvv_${BuildConfig.versionName}")
-            distsDirectory.set(layout.buildDirectory.dir("custom-dist"))
-            libsDirectory.set(layout.buildDirectory.dir("custom-libs"))
-        }
+//        base {
+//            //打包名称示例：BuildSrc(1.2)-release.apk
+//            archivesName.set("vvvvv_${BuildConfig.versionName}")
+//            distsDirectory.set(layout.buildDirectory.dir("custom-dist"))
+//            libsDirectory.set(layout.buildDirectory.dir("custom-libs"))
+//        }
 
         signingConfigs {
 //            getByName("debug") {
