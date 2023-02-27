@@ -42,7 +42,7 @@ jobs:
         run: |
           versionCode=`grep "versionCode" app/build.gradle | awk -F " " '{print $2}'`
           versionName=`grep "versionName" app/build.gradle | awk -F ''\"'' '{print $2}'`
-          echo "versionName=$versionName"  >> $GITHUB_ENV
+          echo "versionResult=$versionName"  >> $GITHUB_ENV
 #          echo "versionResult=$versionName.$versionCode"  >> $GITHUB_ENV
 
       # 创建release
@@ -52,8 +52,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.versionName }}
-          release_name: Release ${{ env.versionName }}
+          tag_name: ${{ env.versionResult }}
+          release_name: Release ${{ env.versionResult }}
           draft: false
           prerelease: false
 
