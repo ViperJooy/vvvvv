@@ -36,6 +36,16 @@ jobs:
           name: app
           path: app/build/outputs/apk/release/app-release.apk
 
+      - name: Build & Publish Release APK
+        # You may pin to the exact commit or the version.
+        # uses: evonicgu/action-release-releaseapk@ba7b20aa82dc51a555e6cee0b2f64a0c1fa8e228
+        uses: evonicgu/action-release-releaseapk@0.0.8
+        with:
+          # Github secret token to allow automated publishing of APK to release.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Github repository branch name.
+          REPO_BRANCH: master
+
       # 获取apk版本号
       - name: APK Version
         id: apk_version
