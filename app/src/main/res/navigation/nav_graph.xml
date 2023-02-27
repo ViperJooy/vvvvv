@@ -3,31 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/live_fragment">
+    app:startDestination="@id/mainFragment">
+
+    <!-- android:label="fragment_main" 显示在title上-->
 
     <fragment
-        android:id="@+id/live_fragment"
-        android:name="com.viper.vvvvv.ui.LiveFragment"
-        android:label="Live"
-        tools:layout="@layout/fragment_live">
+        android:id="@+id/mainFragment"
+        android:name="com.viper.vvvvv.ui.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main">
+
         <action
-            android:id="@+id/action_liveFragment_to_videoFragment"
-            app:destination="@id/video_fragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/video_fragment"
-        android:name="com.viper.vvvvv.ui.VideoFragment"
-        android:label="Video"
-        tools:layout="@layout/fragment_video">
-        <action
-            android:id="@+id/action_videoFragment_to_otherFragment"
-            app:destination="@id/other_fragment" />
+            android:id="@+id/action_home_fragment_to_play_fragment"
+            app:destination="@id/playerFragment" />
+
+
     </fragment>
 
+    <!--    <fragment-->
+    <!--        android:id="@+id/liveFragment"-->
+    <!--        android:name="com.viper.vvvvv.ui.live.LiveFragment"-->
+    <!--        tools:layout="@layout/fragment_live">-->
+
+    <!--        &lt;!&ndash; videoplay&ndash;&gt;-->
+    <!--        <action-->
+    <!--            android:id="@+id/action_live_fragment_to_player_fragment"-->
+    <!--            app:destination="@+id/playerFragment" />-->
+
+    <!--    </fragment>-->
+
+    <!--    videoplay-->
     <fragment
-        android:id="@+id/other_fragment"
-        android:name="com.viper.vvvvv.ui.OtherFragment"
-        android:label="Other"
-        tools:layout="@layout/fragment_other" />
+        android:id="@+id/playerFragment"
+        android:name="com.viper.vvvvv.ui.live.PlayerFragment"
+        android:label="playerFragment"
+        tools:layout="@layout/fragment_player">
+
+        <argument
+            android:name="roomInfo"
+            app:argType="com.viper.vvvvv.model.RoomInfo"
+            app:nullable="false" />
+    </fragment>
+
 
 </navigation>

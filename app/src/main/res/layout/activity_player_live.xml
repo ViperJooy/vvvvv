@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<!--    <data>-->
+
+<!--        <variable-->
+<!--            name="vm"-->
+<!--            type="com.viper.vvvvv.ui.LiveUrlViewModel" />-->
+<!--    </data>-->
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+<!--        <com.google.android.exoplayer2.ui.StyledPlayerView-->
+<!--            android:id="@+id/exoPlayerView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="220dp"-->
+<!--            android:keepScreenOn="true"-->
+<!--            app:toast="@{vm.toastMessage}"-->
+<!--            app:controller_layout_id="@layout/exo_player_control_view"-->
+<!--            app:resize_mode="fixed_height">-->
+
+<!--            <com.github.ybq.android.spinkit.SpinKitView-->
+<!--                android:id="@+id/spin_kit"-->
+<!--                style="@style/SpinKitView.CubeGrid"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                app:gone="@{!vm.loading}"-->
+<!--                app:SpinKit_Color="@color/white" />-->
+<!--&lt;!&ndash;            app:gone="@{!vm.loading}"&ndash;&gt;-->
+<!--        </com.google.android.exoplayer2.ui.StyledPlayerView>-->
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

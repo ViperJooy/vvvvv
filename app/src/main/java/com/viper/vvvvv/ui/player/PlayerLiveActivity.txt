@@ -1,0 +1,159 @@
+package com.viper.vvvvv.ui.player
+
+import android.os.Bundle
+import android.view.GestureDetector
+import android.view.KeyEvent
+import android.view.MotionEvent
+import android.view.View
+import androidx.activity.viewModels
+import androidx.core.view.isVisible
+import com.gyf.immersionbar.ktx.immersionBar
+import com.gyf.immersionbar.ktx.showStatusBar
+import com.skydoves.bundler.bundleNonNull
+import com.skydoves.bundler.intentOf
+import com.skydoves.transformationlayout.TransformationCompat
+import com.skydoves.transformationlayout.TransformationLayout
+import com.viper.baselibrary.base.BaseBindingActivity
+import com.viper.player.databinding.ExoPlayerViewBinding
+import com.viper.player.extension.*
+import com.viper.player.util.CustomPlaybackState
+import com.viper.player.util.track.TrackEntity
+import com.viper.player.view.track.TrackSelectionDialog
+import com.viper.vvvvv.R
+import com.viper.vvvvv.databinding.ActivityPlayerLiveBinding
+import com.viper.vvvvv.model.RoomInfo
+import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
+import javax.inject.Inject
+
+@AndroidEntryPoint
+class PlayerLiveActivity :
+    BaseBindingActivity<ActivityPlayerLiveBinding>(R.layout.activity_player_live) {
+
+
+    @Inject
+    internal lateinit var liveUrlViewModelFactory: LiveUrlViewModel.AssistedFactory
+
+    private val liveUrlViewModel: LiveUrlViewModel by viewModels {
+        LiveUrlViewModel.provideFactory(liveUrlViewModelFactory, roomItem)
+    }
+
+    private val roomItem: RoomInfo by bundleNonNull(EXTRA_ROOM)
+
+    //exoplayer
+    private val exoBinding: ExoPlayerViewBinding by lazy(LazyThreadSafetyMode.NONE) {
+        ExoPlayerViewBinding.bind(binding.root)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+//        immersionBar {
+//            showStatusBar()
+//            autoStatusBarDarkModeEnable(true, 0.2f) //自动状态栏字体变色，必须指定状态栏颜色才可以自动变色哦
+//        }
+
+        binding {
+            vm = liveUrlViewModel
+        }
+
+
+        liveUrlViewModel.onActivityCreate(this)
+//        resolveSystemGestureConflict()
+        initClickListeners()
+
+        with(liveUrlViewModel) {
+            playerLiveData.observe(this@PlayerLiveActivity) { exoPlayer ->
+                binding.exoPlayerView.player = exoPlayer
+            }
+
+            playbackStateLiveData.observe(this@PlayerLiveActivity) { playbackState ->
+                setProgressbarVisibility(playbackState)
+                setVideoControllerVisibility(playbackState)
+            }
+
+            isMuteLiveData.observe(
+                this@PlayerLiveActivity,
+                exoBinding.exoControllerPlaceholder.muteButton::setMuteState
+            )
+        }
+    }
+
+
+//    override fun onResume() {
+//        super.onResume()
+//        hideSystemUI(binding.root)
+//    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        releasePlayerView()
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        Timber.e("$event")
+        return super.onTouchEvent(event)
+    }
+
+
+//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+//        return super.onKeyDown(keyCode, event)
+//    }
+
+    private fun initClickListeners() {
+        with(exoBinding.exoControllerPlaceholder) {
+            exoBackButton.setOnClickListener { onBackPressed() }
+            playPauseButton.setOnClickListener { liveUrlViewModel.onPlayButtonClicked() }
+            muteButton.setOnClickListener { liveUrlViewModel.onMuteClicked() }
+            replayButton.setOnClickListener { liveUrlViewModel.onReplayClicked() }
+        }
+    }
+
+    private fun setProgressbarVisibility(playbackState: CustomPlaybackState) {
+        binding.spinKit.isVisible = playbackState == CustomPlaybackState.LOADING
+    }
+
+    private fun setVideoControllerVisibility(playbackState: CustomPlaybackState) {
+        exoBinding.exoControllerPlaceholder.run {
+            playPauseButton.setState(playbackState)
+            when (playbackState) {
+                CustomPlaybackState.PLAYING,
+                CustomPlaybackState.PAUSED -> {
+                    root.visible()
+                    replayButton.gone()
+                }
+                CustomPlaybackState.ERROR,
+                CustomPlaybackState.ENDED -> {
+                    replayButton.visible()
+                }
+                else -> {
+                    replayButton.gone()
+                }
+            }
+        }
+    }
+
+
+
+    private fun releasePlayerView() {
+        with(binding.exoPlayerView) {
+            removeAllViews()
+            player = null
+        }
+    }
+
+
+    companion object {
+        private const val DIALOG_TAG = "dialogTag"
+
+        internal const val EXTRA_ROOM = "extra_room"
+
+        fun startActivity(transformationLayout: TransformationLayout, room: RoomInfo) =
+            transformationLayout.context.intentOf<PlayerLiveActivity> {
+                putExtra(EXTRA_ROOM to room)
+                TransformationCompat.startActivity(transformationLayout, intent)
+            }
+    }
+}
+
+

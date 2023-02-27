@@ -1,6 +1,28 @@
 <resources>
     <string name="app_name">vvvvv</string>
+    <string name="database">Vvvvv.db</string>
     <string name="menu_live">直播</string>
     <string name="menu_video">视频</string>
     <string name="menu_other">其他</string>
+
+    <string name="player_activity_name">Media player</string>
+    <string name="media_url_mp4">https://dm30webimages.lynkco.com.cn/LynkCoPortal/Files/Live/2021birth/1012/5years.mp4</string>
+    <string name="media_url_lpl"><![CDATA[https://hw.flv.huya.com/src/78941969-2559461593-10992803837303062528-2693342886-10057-A-0-1-imgplus.flv?wsSecret=2ee7451a673e39fe46d465663a8d583b&wsTime=62963366&fm=RFdxOEJjSjNoNkRKdDZUWV8kMF8kMV8kMl8kMw%3D%3D&ctype=tars_mobile&txyp=o%3Ad3%3B&fs=bgct&&sphdcdn=al_7-tx_3-js_3-ws_7-bd_2-hw_2&sphdDC=huya&sphd=264_*-265_*&t=103&uid=0&seqid=16539243326588650]]></string>
+    <string name="media_url_66"><![CDATA[http://akm-tct.douyucdn.cn/live/252140rI48VFJ3AU_2000.flv?uuid=]]></string>
+    <string name="media_url_xl"><![CDATA[https://bd.flv.huya.com/src/5266674-5266674-22620192588693504-10656804-10057-A-0-1.flv?wsSecret=a9d76da418894fd43f860a9fcaf72612&wsTime=62979738&fm=RFdxOEJjSjNoNkRKdDZUWV8kMF8kMV8kMl8kMw%3D%3D&ctype=tars_mobile&fs=bgct&&sphdcdn=al_7-tx_3-js_3-ws_7-bd_2-hw_2&sphdDC=huya&sphd=264_*-265_*&exsphd=264_2000,264_4000,264_8000,&t=103&uid=0&seqid=16540154164790690&ratio=4000]]></string>
+    <string name="media_url_m3u8"><![CDATA[https://hreakvipok9ba.playwoool.com/the.handmaiden.2016.limited.extended.1080p.bluray.x264-usury/pl.m3u8]]></string>
+
+
+    <string name="hide_danmaku">hide</string>
+    <string name="show_danmaku">show</string>
+    <string name="pause_danmaku">pause</string>
+    <string name="resume_danmaku">resume</string>
+    <string name="send_danmaku">发送一条(纯文字)</string>
+    <string name="send_danmaku_image_text">发送一条(图文)</string>
+    <string name="send_danmakus">定时发送</string>
+    <string name="cancel_sending_danmakus">取消定时</string>
+
+    <string name="release">release</string>
+    <string name="rotate">旋转屏幕</string>
+    <string name="empty">There are no posters. 😅</string>
 </resources>

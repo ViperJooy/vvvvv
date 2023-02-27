@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="pagerAdapter"
+            type="com.viper.vvvvv.ui.adapter.MainPagerAdapter" />
+    </data>
+
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.drakeet.drawer.FullDraggableContainer
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/app_bar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="@color/colorPrimary"
+                        app:popupTheme="@style/Theme.AppCompat.Light"
+                        app:theme="@style/ThemeOverlay.AppCompat.Dark"
+                        app:title="Live" />
+
+                </com.google.android.material.appbar.AppBarLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toTopOf="@id/bottomBar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/app_bar_layout">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/main_viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:bindNavigation="@{bottomBar}"
+                        app:pagerAdapter="@{pagerAdapter}" />
+                </FrameLayout>
+
+
+                <me.ibrahimsn.lib.SmoothBottomBar
+                    android:id="@+id/bottomBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    app:backgroundColor="@color/colorPrimary"
+                    app:cornerRadius="0dp"
+                    app:iconSize="24dp"
+                    app:iconTint="#C8FFFFFF"
+                    app:iconTintActive="#FFFFFF"
+                    app:indicatorColor="#2DFFFFFF"
+                    app:indicatorRadius="16dp"
+                    app:itemPadding="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:menu="@menu/menu_bottom"
+                    app:sideMargins="10dp"
+                    app:textColor="@color/colorTextPrimary"
+                    app:textSize="14sp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.drakeet.drawer.FullDraggableContainer>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:insetForeground="@null"
+            app:menu="@menu/nav_drawer_menu" />
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+</layout>

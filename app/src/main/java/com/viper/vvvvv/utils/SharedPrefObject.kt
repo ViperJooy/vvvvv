@@ -4,8 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import android.webkit.CookieManager
-import com.viper.vvvvv.ApiService
-import com.viper.vvvvv.MyApplication
+import com.viper.baselibrary.AppHelper
+import com.viper.vvvvv.network.ApiService
+import com.viper.vvvvv.App
 import okhttp3.Cookie
 import java.lang.StringBuilder
 
@@ -22,11 +23,11 @@ object SharedPrefObject {
     const val KEY_LOGIN_AVATAR = "avatar"
 
     private fun getSharePref(): SharedPreferences {
-        return PreferenceManager.getDefaultSharedPreferences(MyApplication.instance)
+        return PreferenceManager.getDefaultSharedPreferences(AppHelper.mContext)
     }
 
     private fun getCookieSharePref(): SharedPreferences {
-        return MyApplication.instance.getSharedPreferences("cookies", Context.MODE_PRIVATE)
+        return AppHelper.mContext.getSharedPreferences("cookies", Context.MODE_PRIVATE)
     }
 
     fun put(key: String, value: String) {
@@ -74,7 +75,7 @@ object SharedPrefObject {
             names.forEach {
                 add(
                     Cookie.Builder()
-                        .domain(ApiService.BASEURL)
+//                        .domain(ApiService.BASEURL)
                         .name(it)
                         .value(sp.getString(it, "") ?: "")
                         .build()
