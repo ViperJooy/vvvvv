@@ -38,35 +38,33 @@ jobs:
 
       # 获取apk版本号
       - name: Get Apk Version
-        # You may pin to the exact commit or the version.
-        # uses: JantHsueh/get-apk-info-action@25d7533710b5a7ae49819d8988204710fb50b83b
-        uses: JantHsueh/get-apk-info-action@1.0
+        id: apk-info
+        uses: hkusu/apk-info-action@v1
         with:
-          # apk path
-          apkPath: app/build/outputs/apk/release/app-release.apk
+          apk-path: app/build/outputs/apk/release/app-release.apk
 
-#      # 创建release
-#      - name: Create Release
-#        id: create_release
-#        uses: actions/create-release@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          tag_name: ${{ env.versionCode }}
-#          release_name: Release ${{ env.versionResult }}
-#          draft: false
-#          prerelease: false
-#
-#      # 上传apk到release
-#      - name: Upload Release Asset
-#        id: upload-release-asset
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`.
-#          # See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-#          upload_url: ${{ steps.create_release.outputs.upload_url }}
-#          asset_path: app/build/outputs/apk/release/app-release.apk
-#          asset_name: App.apk
-#          asset_content_type: application/vnd.android.package-archiv
+      # 创建release
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.apk-info.outputs.version-name }}
+          release_name: Release ${{ steps.apk-info.outputs.version-name }}
+          draft: false
+          prerelease: false
+
+      # 上传apk到release
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`.
+          # See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: app/build/outputs/apk/release/app-release.apk
+          asset_name: App.apk
+          asset_content_type: application/vnd.android.package-archiv
