@@ -55,12 +55,12 @@ android {
         }
 
         signingConfigs {
-            getByName("debug") {
-                keyAlias = "debug"
-                keyPassword = "my debug key password"
-                storeFile = file("keystore.jks")
-                storePassword = "my keystore password"
-            }
+//            getByName("debug") {
+//                keyAlias = "debug"
+//                keyPassword = "my debug key password"
+//                storeFile = file("keystore.jks")
+//                storePassword = "my keystore password"
+//            }
             create("release") {
                 keyAlias = keystoreProperties["keyAlias"] as String
                 keyPassword = keystoreProperties["keyPassword"] as String
