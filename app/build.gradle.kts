@@ -1,4 +1,16 @@
 import kotlin.collections.*
+import java.util.Properties
+import java.io.FileInputStream
+
+// Create a variable called keystorePropertiesFile, and initialize it to your
+// keystore.properties file, in the rootProject folder.
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+
+// Initialize a new Properties() object called keystoreProperties.
+val keystoreProperties = Properties()
+
+// Load your keystore.properties file into the keystoreProperties object.
+keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 plugins {
     id("com.android.application")
@@ -46,14 +58,14 @@ android {
             getByName("debug") {
                 keyAlias = "debug"
                 keyPassword = "my debug key password"
-                storeFile = file("/home/miles/keystore.jks")
+                storeFile = file("keystore.jks")
                 storePassword = "my keystore password"
             }
             create("release") {
-                keyAlias = "release"
-                keyPassword = "viperjooy"
-                storeFile = file("/Users/viper/develop/workspace/android/viper.jks")
-                storePassword = "viperjooy"
+                keyAlias = keystoreProperties["keyAlias"] as String
+                keyPassword = keystoreProperties["keyPassword"] as String
+                storeFile = file(keystoreProperties["storeFile"] as String)
+                storePassword = keystoreProperties["storePassword"] as String
             }
         }
 
