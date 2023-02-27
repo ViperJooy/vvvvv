@@ -6,6 +6,7 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -54,16 +55,16 @@ jobs:
       - name: Sender
         run: echo "sender=$GITHUB_ACTOR" >> $GITHUB_ENV
 
-      # 发送邮件
-      - name: Send mail
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{ secrets.MAIL_USERNAME }}
-          password: ${{ secrets.MAIL_PASSWORD }}
-          subject: Github Actions job result
-          to: viperjooy@gmail.com
-          from: viper github action
-          secure: true
-          body: "吃饭! \n触发人：${{ env.sender }} \n版本：${{ env.versionResult }} \n提交内容：${{ env.updateLog }}"
+#      # 发送邮件
+#      - name: Send mail
+#        uses: dawidd6/action-send-mail@v3
+#        with:
+#          server_address: smtp.gmail.com
+#          server_port: 465
+#          username: ${{ secrets.MAIL_USERNAME }}
+#          password: ${{ secrets.MAIL_PASSWORD }}
+#          subject: Github Actions job result
+#          to: viperjooy@gmail.com
+#          from: viper github action
+#          secure: true
+#          body: "吃饭! \n触发人：${{ env.sender }} \n版本：${{ env.versionResult }} \n提交内容：${{ env.updateLog }}"
