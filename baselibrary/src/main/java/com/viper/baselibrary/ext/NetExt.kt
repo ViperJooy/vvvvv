@@ -34,9 +34,12 @@ private fun checkNetworkState(context: Context): Boolean {
                 false
             }
         }
-    } else {
-        val nwInfo = connectivityManager.activeNetworkInfo ?: return false
-        return nwInfo.isConnected
+    }
+    else {
+//        val nwInfo = connectivityManager.activeNetworkInfo ?: return false
+//        return nwInfo.isConnected
+
+        return connectivityManager.isActiveNetworkMetered
     }
 }
 

@@ -1,5 +1,6 @@
 package com.viper.baselibrary.ext
 
+import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.res.TypedArray
@@ -8,9 +9,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 
@@ -41,26 +39,26 @@ fun ViewPager2.initFragment(
  * ViewPager于fragment绑定
  * 通过BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT支持懒加载
  */
-fun ViewPager.initFragment(
-    manager: FragmentManager,
-    fragments: MutableList<Fragment>
-): ViewPager {
-    //设置适配器
-    adapter = object : FragmentStatePagerAdapter(manager,
-        BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
-    ) {
-        override fun getCount() = fragments.size
-
-        override fun getItem(position: Int): Fragment {
-            return fragments[position]
-        }
-
-        override fun saveState(): Parcelable? {
-            return null
-        }
-    }
-    return this
-}
+//fun ViewPager.initFragment(
+//    manager: FragmentManager,
+//    fragments: MutableList<Fragment>
+//): ViewPager {
+//    //设置适配器
+//    adapter = object : FragmentStatePagerAdapter(manager,
+//        BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+//    ) {
+//        override fun getCount() = fragments.size
+//
+//        override fun getItem(position: Int): Fragment {
+//            return fragments[position]
+//        }
+//
+//        override fun saveState(): Parcelable? {
+//            return null
+//        }
+//    }
+//    return this
+//}
 
 
 
@@ -96,8 +94,10 @@ fun View.clickNoRepeat(interval: Long = 400, onClick: (View) -> Unit) {
  * 复制剪切板
  */
 fun copy(context: Context, msg: String) {
-    val clip = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    clip.text = msg
+    val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+//    clipboard.text = msg
+    val clip: ClipData = ClipData.newPlainText("VVVVVCOPY", msg)
+    clipboard.setPrimaryClip(clip)
     toast("已复制")
 }
 

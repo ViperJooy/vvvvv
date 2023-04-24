@@ -38,7 +38,7 @@ class LivePagingSource(
 //            val repository = apiService.getRecommendByPfAreaLiveRoomList("bilibili","英雄联盟",page, pageSize)
 //            val repository = apiService.getRecommendByAreaAllLiveRoomList("网游竞技","炉石传说",page, pageSize)
             val items = repository.data
-            Timber.d("$items")
+//            Timber.d("$items")
             val preKey = if (page > 1) page - 1 else null
             val nextKey = if (items.isNotEmpty()) page + 1 else null
             LoadResult.Page(items, preKey, nextKey)

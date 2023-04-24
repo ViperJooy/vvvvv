@@ -11,7 +11,7 @@ import android.widget.EditText
 class KeyBoardUtil private constructor() {
     companion object {
         /**
-         * 打卡软键盘
+         * 打开软键盘
          */
         fun openKeyboard(mEditText: EditText?, mContext: Context) {
             val imm =

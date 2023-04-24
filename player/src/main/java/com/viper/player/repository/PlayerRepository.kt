@@ -11,7 +11,7 @@ import javax.inject.Singleton
 import kotlin.math.max
 import kotlin.math.min
 
-@Singleton
+//@Singleton
 class PlayerRepository @Inject constructor(
     private val trackSelectorDataSource: TrackSelectorDataSource
 ) {

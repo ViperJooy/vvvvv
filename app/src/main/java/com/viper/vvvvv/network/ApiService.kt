@@ -17,7 +17,7 @@ interface ApiService {
     /**
      * 根据分页信息获取所有支持直播平台的推荐直播间（根据观看人数降序排序）
      */
-    @GET("/api/live/getRecommend")
+    @GET("/vvvvv/api/live/getRecommend")
     suspend fun getRecommendLiveRoomList(
         @Query("page") page: Int,
         @Query("size") size: Int
@@ -26,7 +26,7 @@ interface ApiService {
     /**
      * 根据分页信息获取指定直播平台的推荐直播间（根据观看人数降序排序）
      */
-    @GET("/api/live/getRecommendByPlatform")
+    @GET("/vvvvv/api/live/getRecommendByPlatform")
     suspend fun getRecommendByPfLiveRoomList(
         @Query("platform") platform: String,
         @Query("page") page: Int,
@@ -36,7 +36,7 @@ interface ApiService {
     /**
      * 获取指定直播平台下特定分区（area）的推荐直播间信息
      */
-    @GET("/api/live/getRecommendByPlatformArea")
+    @GET("/vvvvv/api/live/getRecommendByPlatformArea")
     suspend fun getRecommendByPfAreaLiveRoomList(
         @Query("platform") platform: String,
         @Query("area") area: String,
@@ -48,7 +48,7 @@ interface ApiService {
     /**
      * getRecommendByAreaAll
      */
-    @GET("/api/live/getRecommendByAreaAll")
+    @GET("/vvvvv/api/live/getRecommendByAreaAll")
     suspend fun getRecommendByAreaAllLiveRoomList(
         @Query("areaType") areaType: String,
         @Query("area") area: String,
@@ -60,7 +60,7 @@ interface ApiService {
     /**
      * 获取指定平台直播间的真实直播推流地址
      */
-    @GET("api/live/getRealUrl")
+    @GET("/vvvvv/api/live/getRealUrl")
     suspend fun getLiveRealUrl(
         @Query("platform") name: String,
         @Query("roomId") roomId: String

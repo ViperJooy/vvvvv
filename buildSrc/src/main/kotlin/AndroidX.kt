@@ -42,7 +42,7 @@ object AndroidX {
 
     object Compose{
         const val ui            = "androidx.compose.ui:ui:${Versions.AndroidX.Compose.version}"
-        const val material      ="androidx.compose.material:material:${Versions.AndroidX.Compose.version}"
+        const val material      ="androidx.compose.material:material:${Versions.AndroidX.Compose.material}"
         const val preview       ="androidx.compose.ui:ui-tooling-preview:${Versions.AndroidX.Compose.version}"
         //use debugImplementation
         const val uiTooling     ="androidx.compose.ui:ui-tooling:$${Versions.AndroidX.Compose.version}"
@@ -108,7 +108,7 @@ object AndroidX {
         private const val version = Versions.AndroidX.Lifecycle.version
 
         @Deprecated("lifecycle-extensions 已弃用，截至到目前最后一个版本2.2.0，ViewModelProviders.of()被废弃了，使用ViewModelProvider(ViewModelStoreOwner)")
-        const val extensions    = "androidx.lifecycle:lifecycle-extensions:${Versions.AndroidX.Lifecycle.extensions}"
+//        const val extensions    = "androidx.lifecycle:lifecycle-extensions:${Versions.AndroidX.Lifecycle.extensions}"
 
         const val livedata      = "androidx.lifecycle:lifecycle-livedata:$version"
         const val liveDataKtx   = "androidx.lifecycle:lifecycle-livedata-ktx:$version"

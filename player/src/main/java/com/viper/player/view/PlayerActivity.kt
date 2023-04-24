@@ -57,7 +57,7 @@ class PlayerActivity : AppCompatActivity() {
 
         viewModel.onActivityCreate(this)
         qualityViewModel.onActivityCreated()
-        subtitleViewModel.onActivityCrated()
+        subtitleViewModel.onActivityCreated()
         resolveSystemGestureConflict()
         initClickListeners()
 
@@ -77,19 +77,19 @@ class PlayerActivity : AppCompatActivity() {
             )
         }
 
-//        with(qualityViewModel) {
-//            qualityEntitiesLiveData.observe(this@PlayerActivity, ::setupQualityButton)
-//            onQualitySelectedLiveData.observe(this@PlayerActivity) {
-//                dismissTrackSelectionDialogIfExist()
-//            }
-//        }
-//
-//        with(subtitleViewModel) {
-//            subtitleEntitiesLiveData.observe(this@PlayerActivity, ::setupSubtitleButton)
-//            onSubtitleSelectedLiveData.observe(this@PlayerActivity) {
-//                dismissTrackSelectionDialogIfExist()
-//            }
-//        }
+        with(qualityViewModel) {
+            qualityEntitiesLiveData.observe(this@PlayerActivity, ::setupQualityButton)
+            onQualitySelectedLiveData.observe(this@PlayerActivity) {
+                dismissTrackSelectionDialogIfExist()
+            }
+        }
+
+        with(subtitleViewModel) {
+            subtitleEntitiesLiveData.observe(this@PlayerActivity, ::setupSubtitleButton)
+            onSubtitleSelectedLiveData.observe(this@PlayerActivity) {
+                dismissTrackSelectionDialogIfExist()
+            }
+        }
     }
 
     override fun onResume() {
@@ -135,23 +135,23 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
-//    private fun setupQualityButton(qualities: List<TrackEntity>) {
-//        exoBinding.exoControllerPlaceholder.qualityButton.apply {
-//            if (qualities.isNotEmpty()) {
-//                setImageButtonTintColor(R.color.white)
-//                setOnClickListener { openTrackSelectionDialog(qualities) }
-//            }
-//        }
-//    }
-//
-//    private fun setupSubtitleButton(subtitles: List<TrackEntity>) {
-//        exoBinding.exoControllerPlaceholder.subtitleButton.apply {
-//            if (subtitles.isNotEmpty()) {
-//                setImageButtonTintColor(R.color.white)
-//                setOnClickListener { openTrackSelectionDialog(subtitles) }
-//            }
-//        }
-//    }
+    private fun setupQualityButton(qualities: List<TrackEntity>) {
+        exoBinding.exoControllerPlaceholder.qualityButton.apply {
+            if (qualities.isNotEmpty()) {
+                setImageButtonTintColor(R.color.white)
+                setOnClickListener { openTrackSelectionDialog(qualities) }
+            }
+        }
+    }
+
+    private fun setupSubtitleButton(subtitles: List<TrackEntity>) {
+        exoBinding.exoControllerPlaceholder.subtitleButton.apply {
+            if (subtitles.isNotEmpty()) {
+                setImageButtonTintColor(R.color.white)
+                setOnClickListener { openTrackSelectionDialog(subtitles) }
+            }
+        }
+    }
 
     private fun openTrackSelectionDialog(items: List<TrackEntity>) {
         dismissTrackSelectionDialogIfExist()

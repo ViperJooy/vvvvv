@@ -35,6 +35,7 @@ android {
         checkReleaseBuilds = false
         abortOnError = false
     }
+    namespace = "com.viper.baselibrary"
 }
 
 

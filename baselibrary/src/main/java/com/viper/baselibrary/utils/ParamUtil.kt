@@ -1,8 +1,10 @@
 package com.viper.baselibrary.utils
 
 import android.app.Activity
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 
 /**
@@ -12,6 +14,7 @@ object ParamUtil {
     /**
      * Fragment
      */
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun initParam(fragment: Fragment) {
         val javaClass = fragment.javaClass
         fragment.arguments?.apply {
@@ -22,12 +25,14 @@ object ParamUtil {
     /**
      * Activity
      */
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun initParam(activity: Activity) {
         activity.intent.extras?.apply {
             setParam(activity, this)
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun setParam(obj: Any, intent: Bundle) {
         val javaClass = obj.javaClass
         val fields = javaClass.declaredFields
@@ -63,7 +68,7 @@ object ParamUtil {
                                 intent.getFloat(key, 0f)
                             }
                             else -> {
-                                intent.getSerializable(key)
+                                intent.getSerializable(key,String::class.java)
                             }
                         }?.apply {
                             item.isAccessible = true

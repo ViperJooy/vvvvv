@@ -110,13 +110,14 @@ android {
         checkReleaseBuilds = false
         abortOnError = false
     }
+    namespace = "com.viper.vvvvv"
 }
 
 dependencies {
     implementation(fileTree(mapOf("include" to listOf("*.jar"), "dir" to "libs")))
 
     implementation(project(":baselibrary"))
-//    implementation(project(":player")) //exoplayer播放器
+    implementation(project(":player")) //exoplayer播放器
 
     implementation(AndroidX.appcompat)
     implementation(AndroidX.preference)
@@ -186,7 +187,7 @@ dependencies {
     implementation(ThirdPart.OkHttp.loggingInterceptor)
 
     //mmkv
-//    implementation(ThirdPart.mmkv)
+    implementation(ThirdPart.mmkv)
 
     //third views
     implementation(ThirdPart.smoothBottomBar)
@@ -195,8 +196,9 @@ dependencies {
     implementation(ThirdPart.fullDraggableDrawer)
 //    implementation(ThirdPart.autoSize)
 
-    //exoplayer media库
-    implementation("com.github.JarvanMo:ExoVideoView:2.1.6")
+//    //exoplayer media库
+//    implementation("com.github.JarvanMo:ExoVideoView:2.1.6")
+    implementation(ThirdPart.ExoPlayer.all)
 
 
     //Android开源弹幕引擎·烈焰弹幕使 ～ bilibili

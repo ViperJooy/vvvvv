@@ -3,7 +3,7 @@
  * @description 编译配置信息
  */
 object BuildConfig {
-    const val compileSdk: String = "android-31"
+    const val compileSdk: String = "android-33"
     const val buildToolsVersion = "30.0.3"
     const val minSdkVersion = 23
     const val targetSdkVersion = 31

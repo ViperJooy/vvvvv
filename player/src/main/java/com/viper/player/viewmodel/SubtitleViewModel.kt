@@ -41,7 +41,7 @@ class SubtitleViewModel @AssistedInject constructor(
         resetState()
     }
 
-    fun onActivityCrated() {
+    fun onActivityCreated() {
         if (subtitles.isNotEmpty()) {
             return
         }

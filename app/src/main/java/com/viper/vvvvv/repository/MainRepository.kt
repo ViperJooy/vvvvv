@@ -122,34 +122,9 @@ class MainRepository @Inject constructor(
                     onError("未获取到直播地址")
                 }
             )
-
-
-//            response.data.whatIfNotNullOrEmpty { it ->
-//                if (it["OD"].toString().isEmpty()) {
-//                    onError("视频直播流错误")
-//                }
-//                it.forEach {
-//                    Timber.e("${it.key}: ${it.value}")
-//                }
-//                emit(response.data)
-//            }
         } else {
             onError(response.message)
         }
-
-
-//        response.suspendOnSuccess {
-//            emit(data.data)
-//        }
-//            // handles the case when the API request gets an error response.
-//            // e.g., internal server error.
-//            .onError {
-//                /** maps the [ApiResponse.Failure.Error] to the [PokemonErrorResponse] using the mapper. */
-//                map(ErrorResponseMapper) { onError("[Code: $code]: $message") }
-//            }
-//            // handles the case when the API request gets an exception response.
-//            // e.g., network connection error.
-//            .onException { onError(message) }
     }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 
 }

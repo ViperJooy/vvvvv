@@ -4,28 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="vm"
             type="com.viper.vvvvv.ui.live.LiveUrlViewModel" />
     </data>
 
-    <LinearLayout
-        android:id="@+id/activity_main"
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <com.jarvanmo.exoplayerview.ui.ExoVideoView
-            android:id="@+id/videoView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-<!--        <com.jarvanmo.exoplayerview.ui.ExoVideoView-->
-<!--            android:id="@+id/videoView"-->
+<!--        <com.google.android.exoplayer2.ui.StyledPlayerView-->
+<!--            android:id="@+id/exoPlayerView"-->
 <!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:layout_weight="1.5" />-->
+<!--            android:layout_height="220dp"-->
+<!--            android:keepScreenOn="true"-->
+<!--            app:controller_layout_id="@layout/exo_player_control_view"-->
+<!--            app:resize_mode="fixed_height"-->
+<!--            app:toast="@{vm.toastMessage}">-->
+        <com.google.android.exoplayer2.ui.StyledPlayerView
+            android:id="@+id/exoPlayerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:keepScreenOn="true"
+            app:controller_layout_id="@layout/exo_player_control_view"
+            app:toast="@{vm.toastMessage}">
 
-    </LinearLayout>
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/spin_kit"
+                style="@style/SpinKitView.CubeGrid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:SpinKit_Color="@color/white"
+               />
+<!--            app:gone="@{!vm.loading}"-->
+        </com.google.android.exoplayer2.ui.StyledPlayerView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

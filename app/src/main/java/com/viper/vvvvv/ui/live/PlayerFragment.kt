@@ -1,29 +1,30 @@
 package com.viper.vvvvv.ui.live
 
-import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.navArgs
-import com.jarvanmo.exoplayerview.media.SimpleMediaSource
-import com.jarvanmo.exoplayerview.ui.ExoVideoView
 import com.skydoves.bindables.BindingFragment
+import com.viper.player.databinding.ExoPlayerViewBinding
+import com.viper.player.extension.*
+import com.viper.player.util.CustomPlaybackState
 import com.viper.vvvvv.R
 import com.viper.vvvvv.databinding.FragmentPlayerBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class PlayerFragment : BindingFragment<FragmentPlayerBinding>(R.layout.fragment_player) {
+
+    private val exoBinding: ExoPlayerViewBinding by lazy(LazyThreadSafetyMode.NONE) {
+        ExoPlayerViewBinding.bind(binding.root)
+    }
 
     private val args: PlayerFragmentArgs by navArgs()
 
@@ -34,8 +35,6 @@ class PlayerFragment : BindingFragment<FragmentPlayerBinding>(R.layout.fragment_
         LiveUrlViewModel.provideFactory(liveUrlViewModelFactory, args.roomInfo)
     }
 
-
-    private lateinit var videoView: ExoVideoView
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,88 +47,104 @@ class PlayerFragment : BindingFragment<FragmentPlayerBinding>(R.layout.fragment_
         }.root
     }
 
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Timber.e("fragment onViewCreated")
-        videoView = binding.videoView
-        videoView.isPortrait =
-            resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-        videoView.setBackListener { view, isPortrait ->
-            if (isPortrait) {
-                activity?.finish()
-            }
-            false
-        }
-
-//        videoView.setOrientationListener { orientation ->
-//            if (orientation == OnOrientationChangedListener.SENSOR_PORTRAIT) {
-//            } else if (orientation == OnOrientationChangedListener.SENSOR_LANDSCAPE) {
-//            }
-//        }
 
         viewModel.viewModelScope.launch {
-            viewModel.urlResponseData.collect { it ->
-                it?.get("OD")?.let {
-                    val mediaSource = SimpleMediaSource(it)
-                    mediaSource.setDisplayName("Apple HLS")
-
-                    videoView.play(mediaSource, true)
+            viewModel.urlResponseData.collect { urlResponseData ->
+                activity?.let { a ->
+                    urlResponseData?.get("OD")?.let {
+                        viewModel.onActivityCreate(it, a)
+                    }
                 }
             }
         }
 
+        activity?.resolveSystemGestureConflict()
+        initClickListeners()
+
+        with(viewModel) {
+            playerLiveData.observe(this@PlayerFragment) { exoPlayer ->
+                binding.exoPlayerView.player = exoPlayer
+            }
+
+            playbackStateLiveData.observe(this@PlayerFragment) { playbackState ->
+                setProgressbarVisibility(playbackState)
+                setVideoControllerVisibility(playbackState)
+            }
+
+            isMuteLiveData.observe(
+                this@PlayerFragment,
+                exoBinding.exoControllerPlaceholder.muteButton::setMuteState
+            )
+        }
     }
 
-    private fun changeToPortrait() {
-        val attributes = activity?.window?.attributes
-        val window = activity?.window
-        window?.attributes = attributes
-        window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
+
+
+    private fun initClickListeners() {
+        with(exoBinding.exoControllerPlaceholder) {
+            exoBackButton.setOnClickListener {
+                activity?.onBackPressed()
+            }
+            playPauseButton.setOnClickListener { viewModel.onPlayButtonClicked() }
+            muteButton.setOnClickListener { viewModel.onMuteClicked() }
+            replayButton.setOnClickListener { viewModel.onReplayClicked() }
+        }
     }
 
-    private fun changeToLandscape() {
-        val attributes = activity?.window?.attributes
-        val window = activity?.window
-        window?.attributes = attributes
-        window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
-
+    private fun setProgressbarVisibility(playbackState: CustomPlaybackState) {
+        binding.spinKit.isVisible = playbackState == CustomPlaybackState.LOADING
     }
+
+    private fun setVideoControllerVisibility(playbackState: CustomPlaybackState) {
+        exoBinding.exoControllerPlaceholder.run {
+            playPauseButton.setState(playbackState)
+            exoBackButton.visibility = View.GONE
+            exoProgress.visibility = View.GONE
+            exoPosition.visibility = View.GONE
+            exoDuration.visibility = View.GONE
+
+            when (playbackState) {
+                CustomPlaybackState.PLAYING,
+                CustomPlaybackState.PAUSED -> {
+                    root.visible()
+                    replayButton.gone()
+                }
+                CustomPlaybackState.ERROR,
+                CustomPlaybackState.ENDED -> {
+                    replayButton.visible()
+                }
+                else -> {
+                    replayButton.gone()
+                }
+            }
+        }
+    }
+
+
+    private fun releasePlayerView() {
+        with(binding.exoPlayerView) {
+            removeAllViews()
+            player = null
+        }
+    }
+
 
     override fun onResume() {
         super.onResume()
-        if (Build.VERSION.SDK_INT <= 23) {
-            videoView.resume()
-        }
+        activity?.hideSystemUI(binding.root)
     }
 
-    override fun onPause() {
-        super.onPause()
-        if (Build.VERSION.SDK_INT <= 23) {
-            videoView.pause()
-        }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+//        releasePlayerView()
     }
 
-    override fun onStop() {
-        super.onStop()
-        if (Build.VERSION.SDK_INT > 23) {
-            videoView.pause()
-        }
+    companion object {
+        private const val DIALOG_TAG = "dialogTag"
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        videoView.releasePlayer()
-    }
-
-//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-//        return if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            videoView.onKeyDown(keyCode, event)
-//        } else super.onKeyDown(keyCode, event)
-//    }
 }
